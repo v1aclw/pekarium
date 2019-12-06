@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="/assets/css/confirm.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#number').mask('0000 0000 0000 0000');
+            $('#cvv').mask('000');
+            $('#expiration_month').mask('00');
+            $('#expiration_year').mask('0000');
+
+            $("#card").submit(function () {
+                $("#number").unmask();
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <article class="card">
+        <div class="card-body p-5">
+            {% for message in app.flashes('error') %}
+                <p class="alert alert-danger">{{ message }}</p>
+            {% endfor %}
+
+            {{ form_errors(form) }}
+
+            {{ form_start(form, {'attr': {'id': 'card'}}) }}
+            {{ form_row(form.holder, {'label': 'app.payment.request.confirm.label.holder'}) }}
+            {{ form_row(form.number, {'attr' : {'placeholder': '0000 0000 0000 0000'}, 'label': 'app.payment.request.confirm.label.number'}) }}
+
+            <div class="row align-items-end">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label class="col-form-label required">{{ 'app.payment.request.confirm.label.expiration_date'|trans({}, 'forms') }}</label>
+                        {{ form_errors(form.expiration_month) }}
+                        {{ form_errors(form.expiration_year) }}
+                        <div class="form-inline">
+                            {{ form_widget(form.expiration_month, {'attr': {'style': 'width:45%', 'placeholder': 'MM'}}) }}
+                            <span style="width:10%; text-align: center"> / </span>
+                            {{ form_widget(form.expiration_year, {'attr': {'style': 'width:45%', 'placeholder': 'YYYY'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 align-bottom">
+                    {{ form_row(form.cvv, {'attr': {'placeholder': '000'}, 'label': 'app.payment.request.confirm.label.cvv'}) }}
+                </div>
+            </div>
+            <button class="subscribe btn btn-primary btn-block" type="submit">{{ 'app.payment.request.confirm.label.submit'|trans({}, 'forms') }}</button>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </article>
+
+{% endblock %}

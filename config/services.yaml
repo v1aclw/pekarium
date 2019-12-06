@@ -1,0 +1,66 @@
+parameters:
+  app.cards:
+    - number: '1111111111111111'
+      payable: true
+    - number: '0000000000000000'
+      payable: false
+
+services:
+  _defaults:
+    autowire: true
+
+  #controllers
+  App\Controller\NewPaymentController:
+    public: true
+
+  App\Controller\ConfirmPaymentController:
+    public: true
+
+  App\Controller\SuccessConfirmPaymentController:
+    public: true
+
+  #services
+  App\Payment\Service\PaymentServiceInterface: '@App\Payment\Service\PaymentService'
+  App\Payment\Service\PaymentService:
+
+  App\Form\Error\Factory\FormErrorFactoryInterface: '@App\Form\Error\Factory\FormErrorFactory'
+  App\Form\Error\Factory\FormErrorFactory:
+
+  App\Payment\Request\Serializer\PaymentRequestSerializerInterface: '@App\Payment\Request\Serializer\PaymentRequestSerializer'
+  App\Payment\Request\Serializer\PaymentRequestSerializer:
+
+  App\Error\Factory\ErrorFactoryInterface: '@App\Error\Factory\ErrorFactory'
+  App\Error\Factory\ErrorFactory:
+
+  App\Payment\Request\Factory\PaymentRequestFactoryInterface: '@App\Payment\Request\Factory\PaymentRequestFactory'
+  App\Payment\Request\Factory\PaymentRequestFactory:
+
+  App\Card\Factory\CardFactoryInterface: '@app.card.factory'
+  app.card.factory:
+    class: App\Card\Factory\CardFactory
+
+  App\Card\Storage\CardStorageInterface: '@App\Card\Storage\YamlCardStorage'
+  App\Card\Storage\YamlCardStorage:
+    arguments:
+      - '@app.card.factory'
+      - '%app.cards%'
+
+  App\Card\Filter\Factory\CardFilterFactoryInterface: '@App\Card\Filter\Factory\CardFilterFactory'
+  App\Card\Filter\Factory\CardFilterFactory:
+
+  App\Payment\Event\Dispatcher\PaymentEventDispatcherInterface: '@App\Payment\Event\Dispatcher\PaymentEventDispatcher'
+  App\Payment\Event\Dispatcher\PaymentEventDispatcher:
+
+  #forms
+  App\Form\Type\NewPaymentRequestType:
+    tags:
+      - { name: form.type }
+
+  App\Form\Type\ConfirmPaymentRequestType:
+    tags:
+      - { name: form.type }
+
+  #listeners
+  App\EventListener\CallbackPaymentEventSubscriber:
+    tags:
+      - { name: kernel.event_subscriber }

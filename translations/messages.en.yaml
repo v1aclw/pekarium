@@ -1,0 +1,5 @@
+app:
+  payment:
+    confirm:
+      success: 'Successfully created transaction in processing'
+      back_to_site: 'Return back to the site'

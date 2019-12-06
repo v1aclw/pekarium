@@ -1,0 +1,3 @@
+app:
+  card:
+    not_found: 'Incorrect card data'

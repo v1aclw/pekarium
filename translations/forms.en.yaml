@@ -1,0 +1,10 @@
+app:
+  payment:
+    request:
+      confirm:
+        label:
+          number: Card number
+          holder: Full name (on the card)
+          expiration_date: Expiration
+          cvv: CVV
+          submit: Confirm

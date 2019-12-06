@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="/assets/css/confirm.css">
+{% endblock %}
+
+{% block content %}
+    <article class="success">
+        <p class="alert alert-success">{{ 'app.payment.confirm.success'|trans({}, 'messages') }}</p>
+        <a href="{{ request.redirectUrl }}" class="subscribe btn btn-primary btn-block" type="submit">{{ 'app.payment.confirm.back_to_site'|trans({}, 'messages') }}</a>
+    </article>
+{% endblock %}
