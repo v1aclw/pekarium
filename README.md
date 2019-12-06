@@ -10,7 +10,7 @@ Run `make up`
 Run `make down`
 
 ### How to use
-#####New Payment (step 1)
+##### New Payment (step 1)
 - url: http://fake-payment.pekarium/new
 - method: POST
 - arguments:
@@ -50,7 +50,7 @@ Run `make down`
             - type: array
             - description: error debug data
 
-#####Confirm Payment (step 4)
+##### Confirm Payment (step 4)
 - cards:
   - success: `1111 1111 1111 1111`
   - fail: `0000 0000 0000 0000`
